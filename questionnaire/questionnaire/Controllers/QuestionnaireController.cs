@@ -110,6 +110,7 @@ namespace questionnaire.questionnaire.Controllers
             });
         }
 
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!МЕНЯТЬ ССЫЛКУ ПОСЛЕ ЗДЕСЬ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         // Отображение списка анкет
         [HttpGet("questionnaires")]
@@ -130,7 +131,8 @@ namespace questionnaire.questionnaire.Controllers
                     q.Title,
                     q.CreatedAt,
                     q.IsPublished,
-                    Link = $"http://localhost:3000/Answers/{q.AccessLinkToken}",
+                    //Link = $"http://localhost:3000/anketa#/Answers/{q.AccessLinkToken}",
+                    Link = $"https://5.129.207.189/anketa#/Answers/{q.AccessLinkToken}",
                     q.AccessLinkToken
                 })
                 .ToListAsync();
@@ -150,6 +152,8 @@ namespace questionnaire.questionnaire.Controllers
             return hasher.HashPassword(null, password);
         }
     }
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!МЕНЯТЬ ССЫЛКУ ПОСЛЕ ЗДЕСЬ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     [Route("questionnaire")]
     public class QuestionnaireController : ControllerBase
@@ -240,9 +244,12 @@ namespace questionnaire.questionnaire.Controllers
 
             // ТУТАААААААААА
             // Формируем ссылку
-            var baseUrl = Environment.GetEnvironmentVariable("BASE_URL") ?? "http://localhost:3000";
-/*            var link = $"{baseUrl}/api/questionnaire/access/{questionnaire.AccessLinkToken}";
-*/            var link = $"{baseUrl}/Answers/{questionnaire.AccessLinkToken}";
+            /*var baseUrl = Environment.GetEnvironmentVariable("BASE_URL") ?? "http://localhost:3000";
+            var link = $"{baseUrl}/anketa#/Answers/{questionnaire.AccessLinkToken}";*/
+
+            var baseUrl = Environment.GetEnvironmentVariable("BASE_URL") ?? "https://5.129.207.189";
+            var link = $"{baseUrl}/anketa#/Answers/{questionnaire.AccessLinkToken}";
+
             return Ok(new
             {
                 message = "Анкета успешно создана.",

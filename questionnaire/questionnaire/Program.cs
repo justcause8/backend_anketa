@@ -92,16 +92,28 @@ builder.Services.AddSingleton<TokenService>(provider =>
 });
 
 // Добавляем CORS-политику
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowFrontend", policy =>
+//    {
+//        policy.WithOrigins("http://localhost:3000") // Тут нужно указать домен фронта с GitHub Pages
+//              .AllowAnyHeader()
+//              .AllowAnyMethod()
+//              .AllowCredentials(); // Нужно, если фронт отправляет куки или токен
+//    });
+//});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins("https://justcause8.github.io")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials(); // Нужно, если фронт отправляет куки или токен
+              .AllowCredentials();
     });
 });
+
 
 // Создаём приложение
 var app = builder.Build();
@@ -134,8 +146,10 @@ app.UseExceptionHandler(errorApp =>
 app.MapControllers();
 
 // Настроим доступные порты
-app.Urls.Add("http://localhost:5000");  // HTTP
-app.Urls.Add("https://localhost:7109"); // HTTPS
+/*app.Urls.Add("http://localhost:5000");  // HTTP
+app.Urls.Add("https://localhost:7109"); // HTTPS*/
+
+app.Urls.Add("https://5.129.207.189:443");
 
 // Запускаем сервер
 app.Run();
