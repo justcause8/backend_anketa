@@ -8,6 +8,7 @@ using questionnaire.questionnaire.DTOs;
 using questionnaire.questionnaire.Models;
 using System.Security.Claims;
 using Newtonsoft.Json;
+using static System.Net.WebRequestMethods;
 namespace questionnaire.questionnaire.Controllers
 {
     [Route("user")]
@@ -132,7 +133,7 @@ namespace questionnaire.questionnaire.Controllers
                     q.CreatedAt,
                     q.IsPublished,
                     //Link = $"http://localhost:3000/anketa#/Answers/{q.AccessLinkToken}",
-                    Link = $"https://5.129.207.189/anketa#/Answers/{q.AccessLinkToken}",
+                    Link = $"https://justcause8.github.io/anketa/#/Answers/{q.AccessLinkToken}",
                     q.AccessLinkToken
                 })
                 .ToListAsync();
@@ -247,7 +248,7 @@ namespace questionnaire.questionnaire.Controllers
             /*var baseUrl = Environment.GetEnvironmentVariable("BASE_URL") ?? "http://localhost:3000";
             var link = $"{baseUrl}/anketa#/Answers/{questionnaire.AccessLinkToken}";*/
 
-            var baseUrl = Environment.GetEnvironmentVariable("BASE_URL") ?? "https://5.129.207.189";
+            var baseUrl = Environment.GetEnvironmentVariable("BASE_URL") ?? "https://justcause8.github.io";
             var link = $"{baseUrl}/anketa#/Answers/{questionnaire.AccessLinkToken}";
 
             return Ok(new

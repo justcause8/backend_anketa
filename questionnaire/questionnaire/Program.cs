@@ -72,10 +72,10 @@ builder.Services.AddAuthorization();
 
 // Настройка подключения к БД
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-/*if (string.IsNullOrEmpty(connectionString))
+if (string.IsNullOrEmpty(connectionString))
 {
     throw new InvalidOperationException("Строка подключения 'DefaultConnection' не найдена.");
-}*/
+}
 
 builder.Services.AddDbContext<QuestionnaireContext>(options =>
     options.UseSqlServer(connectionString));
@@ -107,13 +107,12 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("https://justcause8.github.io")
+        policy.WithOrigins("https://justcause8.github.io ")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
     });
 });
-
 
 // Создаём приложение
 var app = builder.Build();
@@ -124,6 +123,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseRouting();
 
 // Порядок middleware важен! CORS должен быть ДО аутентификации
 app.UseCors("AllowFrontend");
@@ -145,11 +146,9 @@ app.UseExceptionHandler(errorApp =>
 
 app.MapControllers();
 
-// Настроим доступные порты
-/*app.Urls.Add("http://localhost:5000");  // HTTP
-app.Urls.Add("https://localhost:7109"); // HTTPS*/
+// Указываем, на каких URL/портах будет работать сервер
+app.Urls.Add("http://*:5000");      // HTTP — можно оставить для внутренней отладки
+app.Urls.Add("https://*:7109");     // HTTPS — основной порт
+app.Urls.Add("https://5.129.207.189:443"); // Привязка к конкретному IP на порту 443
 
-app.Urls.Add("https://5.129.207.189:443");
-
-// Запускаем сервер
-app.Run();
+await app.RunAsync();
