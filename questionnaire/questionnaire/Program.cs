@@ -72,10 +72,10 @@ builder.Services.AddAuthorization();
 
 // Настройка подключения к БД
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-if (string.IsNullOrEmpty(connectionString))
+/*if (string.IsNullOrEmpty(connectionString))
 {
     throw new InvalidOperationException("Строка подключения 'DefaultConnection' не найдена.");
-}
+}*/
 
 builder.Services.AddDbContext<QuestionnaireContext>(options =>
     options.UseSqlServer(connectionString));
@@ -147,8 +147,8 @@ app.UseExceptionHandler(errorApp =>
 app.MapControllers();
 
 // Указываем, на каких URL/портах будет работать сервер
-app.Urls.Add("http://*:5000");      // HTTP — можно оставить для внутренней отладки
-app.Urls.Add("https://*:7109");     // HTTPS — основной порт
-app.Urls.Add("https://5.129.207.189:443"); // Привязка к конкретному IP на порту 443
+app.Urls.Add("http://0.0.0.0:5000");      // HTTP — можно оставить для внутренней отладки
+app.Urls.Add("https://0.0.0.0:7109");     // HTTPS — основной порт
+//app.Urls.Add("https://5.129.207.189:443"); // Привязка к конкретному IP на порту 443
 
 await app.RunAsync();
